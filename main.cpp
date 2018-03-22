@@ -3,7 +3,7 @@
 #include <graphics.h>
 
 using namespace std;
-int x, y, r;
+int x, y, r,x2,y2;
 
 
 /*void moving(){
@@ -15,13 +15,18 @@ int main()
 
 
 
-    int length=5;
+    int punteggio=5;
+    int velocita=100;
 
     r=20;
-    x=500;
+    x=200;
     y=500;
 
+    x2=700;
+    y2=500;
+
     int n=0;
+    int n2=0;
 
     int pos_x_final=500;
     int pos_y_final=500;
@@ -34,11 +39,15 @@ int main()
         int pos_x[100000];
         int pos_y[100000];
 
+        int pos_x2[100000];
+        int pos_y2[100000];
+
         while(gaming){
 
 
 
             setcolor(WHITE);
+
             if(GetAsyncKeyState( 'W' ) & 0x8000){
                 y--;
                 moving=true;
@@ -54,38 +63,47 @@ int main()
             }else{
                 moving=false;
             }
-            pos_x[n]=x;
-            pos_y[n]=y;
-            circle(x,y,r);
-            n++;
 
-
-
-
-            length=500;
-
-            if(n>length){
-                pos_x_final=pos_x[n-length];
-                pos_y_final=pos_y[n-length];
-
-                int pos_x_final1=pos_x[n-1];
-                int pos_y_final1=pos_y[n-1];
-                if(moving==true && x!=pos_x_final1 && y!=pos_y_final1){
-
-
-
-                    setcolor(BLACK);
-
-                    circle(pos_x_final,pos_y_final,r);
-
-                    setfillstyle(SOLID_FILL, BLACK);
-                    floodfill(pos_x_final,pos_y_final,BLACK);
-
-                }
-
+            if(GetAsyncKeyState( VK_UP ) & 0x8000){
+                y2--;
+                moving=true;
+            }else if(GetAsyncKeyState( VK_DOWN ) & 0x8000){
+                y2++;
+                moving=true;
+            }else if(GetAsyncKeyState( VK_LEFT ) & 0x8000){
+                x2--;
+                moving=true;
+            }else if(GetAsyncKeyState( VK_RIGHT ) & 0x8000){
+                x2++;
+                moving=true;
+            }else{
+                moving=false;
             }
 
 
+            if(moving && velocita>2){
+                punteggio+=5;
+                velocita-=1;
+            }
+
+
+            pos_x[n]=x;
+            pos_y[n]=y;
+            circle(x,y,r);
+
+
+            setcolor(GREEN);
+            pos_x2[n2]=x2;
+            pos_y2[n2]=y2;
+            circle(x2,y2,r);
+
+            setfillstyle(SOLID_FILL, BLACK);
+            floodfill(x2,y2,BLACK);
+
+
+
+            n++;
+            n2++;
 
 
 
